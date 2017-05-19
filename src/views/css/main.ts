@@ -72,6 +72,7 @@ const applicationGrid = {
         display: "grid",
         gridTemplateColumns: "100%",
         gridTemplateRows: `${titleBarHeight}px calc(${sessionsHeight}) ${infoPanelHeight}px`,
+        lineHeight: `${rowHeight}px`
     },
     sessions: {
         height: "100%",
