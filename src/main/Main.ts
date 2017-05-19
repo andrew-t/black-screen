@@ -22,7 +22,9 @@ app.on("ready", () => {
     };
     const browserWindow = new BrowserWindow(options);
 
-    browserWindow.setIcon(nativeImage.createFromPath("build/icon.png"));
+    if (browserWindow.setIcon) {
+        browserWindow.setIcon(nativeImage.createFromPath("build/icon.png"));
+    }
 
     if (process.env.REACT_EXTENSION_PATH) {
         BrowserWindow.addDevToolsExtension(process.env.REACT_EXTENSION_PATH);
