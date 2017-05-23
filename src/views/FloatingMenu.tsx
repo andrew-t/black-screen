@@ -30,6 +30,7 @@ interface Props {
     menuItems: MenuItemData[];
     highlightedIndex: number;
     hide: () => void;
+    onClick: (e?: any) => {};
 }
 
 interface State {

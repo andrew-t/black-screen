@@ -36,10 +36,13 @@ interface State {
     showJobMenu: boolean;
 }
 
+let nextId: number = 1;
 
 // TODO: Make sure we only update the view when the model changes.
 export class PromptComponent extends React.Component<Props, State> {
     private prompt: Prompt;
+    private id: number;
+    private clearMenu: EventListener;
 
     private intersectionObserver = new IntersectionObserver(
         (entries) => {
@@ -74,6 +77,8 @@ export class PromptComponent extends React.Component<Props, State> {
             isSticky: false,
             showJobMenu: false,
         };
+
+        this.id = nextId++;
     }
 
     componentDidMount() {
@@ -81,11 +86,21 @@ export class PromptComponent extends React.Component<Props, State> {
         this.setDOMValueProgrammatically(this.prompt.value);
 
         this.intersectionObserver.observe(this.placeholderNode);
+        // TODO - find a proper type for `e`:
+        this.clearMenu = (e: any) => {
+            if (!e[`_doNotHideJobMenu_${this.id}`] &&
+                this.state.showJobMenu)
+                setTimeout(() => this.setState({showJobMenu: false} as State));
+        };
+        document.body.addEventListener('click', this.clearMenu);
+        window.addEventListener('blur', this.clearMenu);
     }
 
     componentWillUnmount() {
         this.intersectionObserver.unobserve(this.placeholderNode);
         this.intersectionObserver.disconnect();
+        document.body.removeEventListener('click', this.clearMenu);
+        window.removeEventListener('blur', this.clearMenu);
     }
 
     componentDidUpdate(prevProps: Props) {
@@ -141,7 +156,10 @@ export class PromptComponent extends React.Component<Props, State> {
 
         jobMenuButton = <span style={{transform: "translateY(-1px)"}} className="jobMenu">
             <Button
-                onClick={() => this.setState({showJobMenu: !this.state.showJobMenu} as State)}
+                onClick={ (e: any) => {
+                    e[`_doNotHideJobMenu_${this.id}`] = true;
+                    this.setState({showJobMenu: !this.state.showJobMenu} as State);
+                } }
             >•••</Button>
         </span>;
 
@@ -175,6 +193,7 @@ export class PromptComponent extends React.Component<Props, State> {
                     {this.props.job.isInProgress() ? jobMenuButton : undefined}
                 </div>
                 {this.state.showJobMenu ? <FloatingMenu
+                    onClick={(e: any) => e[`_doNotHideJobMenu_${this.id}`] = true}
                     highlightedIndex={0}
                     menuItems={[{
                         text: "Send SIGKILL",
