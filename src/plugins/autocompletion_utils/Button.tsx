@@ -15,7 +15,7 @@ const buttonStyles = (color: string) => ({
 });
 
 type ButtonProps = {
-  onClick: (e?: any) => void;
+  onClick: () => void;
   children: string;
   color?: string;
 };

@@ -156,10 +156,7 @@ export class PromptComponent extends React.Component<Props, State> {
 
         jobMenuButton = <span style={{transform: "translateY(-1px)"}} className="jobMenu">
             <Button
-                onClick={ (e: any) => {
-                    e[`_doNotHideJobMenu_${this.id}`] = true;
-                    this.setState({showJobMenu: !this.state.showJobMenu} as State);
-                } }
+                onClick={() => this.setState({showJobMenu: !this.state.showJobMenu} as State)}
             >•••</Button>
         </span>;
 
