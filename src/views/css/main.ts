@@ -146,7 +146,8 @@ export const jobs = (isSessionFocused: boolean): CSSObject => ({
     ...(isSessionFocused ? {} : unfocusedJobs),
 });
 
-
+// This is the per-line div in a block of output.
+// It lives in an `output` and contains `charGroup`s.
 export const row = (jobStatus: Status, activeScreenBufferType: ScreenBufferType) => {
     const style: CSSObject = {
         padding: `0 ${outputPadding}`,
@@ -389,6 +390,8 @@ export const commandSign = {
     verticalAlign: "middle",
 };
 
+// This is a few characters of output; it lives in a `row` in an `output`.
+
 // To display even empty rows. The height might need tweaking.
 // TODO: Remove if we always have a fixed screenBuffer width.
 export const charGroup = (attributes: Attributes, status: Status) => {
@@ -440,6 +443,8 @@ export const outputCut = (status: Status, isHovered: boolean): CSSProperties => 
 
 export const outputCutIcon = {marginRight: 10, ...icon};
 
+// This is the outer div on a block of output from a job.
+// Inside it is `row`.
 export const output = (activeScreenBufferType: ScreenBufferType, status: Status) => {
     const styles: CSSObject = {
         paddingTop: outputPadding,
