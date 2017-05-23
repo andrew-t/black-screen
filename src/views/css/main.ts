@@ -395,6 +395,7 @@ export const charGroup = (attributes: Attributes, status: Status) => {
     const styles: CSSObject = {
         color: colorValue(attributes.color, {isBright: attributes.brightness === Brightness.Bright}),
         backgroundColor: [Status.Failure, Status.Interrupted].includes(status) ? failurize(backgroundColor) : colorValue(attributes.backgroundColor),
+        padding: `${(rowHeight - fontSize) / 2}px 0`
     };
 
     if (attributes.inverse) {
