@@ -12,6 +12,7 @@ export interface CSSObject {
     minWidth?: number | string;
     height?: number | string;
     margin?: number | string;
+    lineHeight?: number | string;
     listStyleType?: "none";
     backgroundColor?: string;
     cursor?: "pointer" | "help" | "progress";
@@ -53,6 +54,7 @@ export interface CSSObject {
     fontWeight?: "bold";
     fontSize?: number;
     WebkitAppearance?: "none";
+    wordWrap?: "break-word";
 }
 
 abstract class Unit {

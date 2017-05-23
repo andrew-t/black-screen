@@ -151,7 +151,9 @@ export const row = (jobStatus: Status, activeScreenBufferType: ScreenBufferType)
     const style: CSSObject = {
         padding: `0 ${outputPadding}`,
         minHeight: rowHeight,
-        contain: "strict",
+        lineHeight: `${rowHeight}px`,
+        contain: "paint",
+        width: `calc(100vw - ${2 * outputPadding}px)`
     };
 
     if (activeScreenBufferType === ScreenBufferType.Alternate) {
@@ -391,8 +393,6 @@ export const commandSign = {
 // TODO: Remove if we always have a fixed screenBuffer width.
 export const charGroup = (attributes: Attributes, status: Status) => {
     const styles: CSSObject = {
-        display: "inline-block",
-        height: rowHeight,
         color: colorValue(attributes.color, {isBright: attributes.brightness === Brightness.Bright}),
         backgroundColor: [Status.Failure, Status.Interrupted].includes(status) ? failurize(backgroundColor) : colorValue(attributes.backgroundColor),
     };
@@ -447,6 +447,7 @@ export const output = (activeScreenBufferType: ScreenBufferType, status: Status)
         paddingLeft: activeScreenBufferType === ScreenBufferType.Alternate ? 0 : outputPadding,
         paddingRight: activeScreenBufferType === ScreenBufferType.Alternate ? 0 : outputPadding,
         whiteSpace: "pre-wrap",
+        wordWrap: "break-word",
         backgroundColor: backgroundColor,
         contain: "paint",
     };
