@@ -49,12 +49,11 @@ export class PromptComponent extends React.Component<Props, State> {
             const entry = entries[0];
             const nearTop = entry.boundingClientRect.top < 50;
             const isVisible = entry.intersectionRatio === 1;
+            const hasStarted = this.props.status !== e.Status.NotStarted;
 
             this.setState({
                 ...this.state,
-                isSticky: nearTop &&
-                    !isVisible &&
-                    this.props.status !== e.Status.NotStarted
+                isSticky: nearTop && !isVisible && hasStarted
             });
         },
         {
